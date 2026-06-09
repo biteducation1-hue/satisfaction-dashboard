@@ -145,7 +145,7 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 .fade:nth-child(4){animation-delay:.15s}
 
 @media(max-width:1100px){.g7,.g4{grid-template-columns:repeat(2,1fr)}.g2,.g3{grid-template-columns:1fr}}
-@media(max-width:640px){.wrap{padding:14px}.g7,.g4,.g2,.g3{grid-template-columns:1fr}.hdr{padding:12px 16px}.tabs{gap:2px}.tab-btn{padding:7px 12px;font-size:12py}}
+@media(max-width:640px){.wrap{padding:14px}.g7,.g4,.g2,.g3{grid-template-columns:1fr}.hdr{padding:12px 16px}.tabs{gap:2px}.tab-btn{padding:7px 12px;font-size:12px}}
 </style>
 </head>
 <body>
@@ -164,7 +164,106 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
     <button class="tab-btn active" data-for="satisfaction" onclick="switchTab('satisfaction',this)">📋 שביעות רצון</button>
     <button class="tab-btn" data-for="onboarding" onclick="switchTab('onboarding',this)">🚀 אונבורדינג</button>
   </div>
-</div>ריים</div><div style="font-size:11px;color:var(--muted)">מ-321 תגובות</div></div>
+</div>
+
+<!-- ══ TAB 1: שביעות רצון ══ -->
+<div id="tab-satisfaction" data-tab="satisfaction">
+<div class="wrap">
+
+<p class="sec">מדדים מרכזיים</p>
+<div class="g4">
+  <div class="card kpi fade">
+    <div class="kpi-lbl">סה"כ משיבים</div>
+    <div class="kpi-v" style="color:var(--blue)">382</div>
+    <div class="kpi-s">מאי 2025 – יוני 2026</div>
+    <div class="track"><div class="fill" style="width:100%;background:var(--blue)"></div></div>
+  </div>
+  <div class="card kpi fade">
+    <div class="kpi-lbl">ציון כללי</div>
+    <div class="kpi-v" style="color:var(--yellow)">3.47<span class="kpi-d">/5</span></div>
+    <div class="kpi-s">69.4% שביעות רצון</div>
+    <div class="track"><div class="fill" style="width:69.4%;background:var(--yellow)"></div></div>
+  </div>
+  <div class="card kpi fade">
+    <div class="kpi-lbl">ציון מנטור</div>
+    <div class="kpi-v" style="color:var(--green)">3.74<span class="kpi-d">/5</span></div>
+    <div class="kpi-s">74.8% שביעות רצון</div>
+    <div class="track"><div class="fill" style="width:74.8%;background:var(--green)"></div></div>
+  </div>
+  <div class="card kpi fade">
+    <div class="kpi-lbl">ציון חברה</div>
+    <div class="kpi-v" style="color:var(--orange)">3.19<span class="kpi-d">/5</span></div>
+    <div class="kpi-s">63.8% שביעות רצון</div>
+    <div class="track"><div class="fill" style="width:63.8%;background:var(--orange)"></div></div>
+  </div>
+</div>
+
+<p class="sec">סקירה כללית</p>
+<div class="g2">
+  <div class="card">
+    <div class="ct">מפת ביצועים – כל הקטגוריות</div>
+    <div class="cs">לחץ על נקודה לפרטים · אנימציה אוטומטית</div>
+    <svg id="radar" viewBox="0 0 320 320" class="svg-wrap" style="height:280px"></svg>
+  </div>
+  <div class="card">
+    <div class="ct">מגמה חודשית – מספר תגובות</div>
+    <div class="cs">עמוד מעל נקודת זמן לפרטים</div>
+    <svg id="trend1" viewBox="0 0 680 220" class="svg-wrap" style="height:280px"></svg>
+  </div>
+</div>
+
+<p class="sec">פירוט ציונים לפי קטגוריה</p>
+<div class="g7" id="metric-grid"></div>
+
+<div class="card" style="margin-top:16px">
+  <div class="ct">השוואת ציונים – כל הקטגוריות</div>
+  <div class="cs">ציון ממוצע 1–5 | עמוד מעל שורה לפרטים | קו ייחוס: 3.5</div>
+  <div id="bars"></div>
+</div>
+
+<!-- ══ PER-MENTOR SECTION ══ -->
+<p class="sec">ביצועים לפי מאמן מסחר</p>
+<div class="g4" id="mentor-cards"></div>
+
+<div class="card" style="margin-top:16px">
+  <div class="ct">השוואת מאמנים – כל המדדים</div>
+  <div class="cs">צבע ירוק = מעולה · כחול = טוב · צהוב = בינוני · אדום = דורש שיפור</div>
+  <div id="mentor-chart"></div>
+</div>
+
+<div style="margin-top:10px;padding:12px 16px;background:rgba(100,116,139,.06);border:1px solid rgba(100,116,139,.15);border-radius:12px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px">
+  <span style="font-size:16px">ℹ️</span>
+  <span><strong style="color:#94a3b8">שי ברינדר</strong> (86 לקוחות) ו<strong style="color:#94a3b8">שגיא אוסקר</strong> (52 לקוחות) אינם מוצגים בהשוואה אך נתוניהם כלולים בכל הממוצעים הכלליים למעלה.</span>
+</div>
+
+<p class="sec" style="margin-top:24px">השתתפות בתכנים</p>
+<div class="g3">
+  <div class="card">
+    <div class="ct">🎓 התקדמות בקורס</div>
+    <div class="cs">לאיזה שיעור הגעת? (382)</div>
+    <div class="donut-wrap"><div class="donut-outer" id="d-course"></div><div class="donut-hole"><div class="donut-cv">382</div><div class="donut-cl">תגובות</div></div></div>
+    <div class="legend" id="lg-course"></div>
+  </div>
+  <div class="card">
+    <div class="ct">💬 פעילות בדיסקורד</div>
+    <div class="cs">האם פעיל בקהילה? (382)</div>
+    <div class="donut-wrap"><div class="donut-outer" id="d-discord"></div><div class="donut-hole"><div class="donut-cv">52%</div><div class="donut-cl">פעילים</div></div></div>
+    <div class="legend" id="lg-discord"></div>
+  </div>
+  <div class="card">
+    <div class="ct">🎥 השתתפות בלייבים</div>
+    <div class="cs">האם השתתפת? (382)</div>
+    <div class="donut-wrap"><div class="donut-outer" id="d-lives"></div><div class="donut-hole"><div class="donut-cv">69%</div><div class="donut-cl">השתתפו</div></div></div>
+    <div class="legend" id="lg-lives"></div>
+  </div>
+</div>
+
+<p class="sec">תובנות מ-321 תגובות פתוחות</p>
+<div class="g3">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <div style="width:32px;height:32px;background:rgba(239,68,68,.12);border-radius:8px;display:flex;align-items:center;justify-content:center">⚠️</div>
+      <div><div style="font-size:14px;font-weight:700">נושאי תלונה עיקריים</div><div style="font-size:11px;color:var(--muted)">מ-321 תגובות</div></div>
     </div>
     <div id="themes"></div>
   </div>
@@ -598,7 +697,7 @@ function buildTrend(svgId, W, H, pl, pr, pt_, pb, mths, vals, color) {
 
   // Area fill
   const area = svgEl('path',{
-    d:`M ${x(0).toFixed(1)},${(pt_+ph).toFixed(1)} ${vals.map((v,i)=>`L ${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')} L ${x(n-1).toFixed(1)},$x(pt_+ph).toFixed(1)} Z`,
+    d:`M ${x(0).toFixed(1)},${(pt_+ph).toFixed(1)} ${vals.map((v,i)=>`L ${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')} L ${x(n-1).toFixed(1)},${(pt_+ph).toFixed(1)} Z`,
     fill:`${color}18`
   });
   svg.appendChild(area);
@@ -685,7 +784,7 @@ const renderList = (id, items) => {
   el.innerHTML = items.map(it =>
     `<div class="ii" style="${it.q?'cursor:pointer':''}">
       <div class="in">${it.n}${it.q?'<span style="margin-right:6px;font-size:10px;opacity:0.45">💬</span>':''}</div>
-      <div class="itrack"><div class="ifill" style="width:$x(it.c/max*100).toFixed(0)}%;background:${it.col}"></div></div>
+      <div class="itrack"><div class="ifill" style="width:${(it.c/max*100).toFixed(0)}%;background:${it.col}"></div></div>
       <div class="ic" style="color:${it.col}">${it.c}</div>
     </div>`).join('');
   el.querySelectorAll('.ii').forEach((row,i) => {
@@ -721,7 +820,7 @@ renderList('improvements',[
   {n:'הגדלת מפגשי זום ל-5-6',c:9,col:'#4f9eff',
    q:'יש סך הכול 3 מפגשים עם מנטור, זה ממש לא מספיק. היה טוב אם היו גם שיעורי בית שהמנטור בודק ומייעץ — זה יכול לעזור להבין הרבה יותר טוב.'},
   {n:'הארכת ליווי ל-6 חודשים',c:7,col:'#60a5fa',
-   q:'יותר זמן ליווי — מרגיש של לא היה ל ל לי מה לשאול בזמן כל כך קצר. 3 חודשים זה בקושי מחזור אחד של קנייה ומכירה.'},
+   q:'יותר זמן ליווי — מרגיש שלא היה לי מה לשאול בזמן כל כך קצר. 3 חודשים זה בקושי מחזור אחד של קנייה ומכירה.'},
   {n:'שיעורי בית ומשימות',c:4,col:'#93c5fd',
    q:'נתקעתי בשלב שבין התיאוריה למעשי. לא הבנתי מה לעשות ובעיקר פחדתי לטעות. הייתי רוצה ליווי יותר צמוד עם משימות יומיות שמקבלות פידבק.'},
 ]);
@@ -819,8 +918,8 @@ function hexToRgb(hex) {
     {key:'nu_listen',    label:'קשב המאמן',     emoji:'👂'},
     {key:'nu_zoom',      label:'פגישות זום',    emoji:'🎥'},
     {key:'nu_choose',    label:'יבחר שוב',      emoji:'🔄'},
-    {key:'nu_service',   label:'שירות לקוחות',   emoji:'🎧'},
-    {key:'nu_content',   label:'תוכן קהךקפץש",   emoji:'📘'},
+    {key:'nu_service',   label:'שירות לקוחות',  emoji:'🎧'},
+    {key:'nu_content',   label:'תוכן הקורס',    emoji:'📚'},
   ];
 
   function cellStyle(v) {
@@ -839,7 +938,7 @@ function hexToRgb(hex) {
       <div style="font-size:13px;font-weight:700;color:#e2e8f0;white-space:nowrap">${m.name}</div>
       <div style="font-size:11px;color:#64748b;margin:3px 0 10px">${m.count} לקוחות</div>
       <div style="font-size:26px;font-weight:800;color:${sc(m.score_mentor)};line-height:1">${m.score_mentor.toFixed(2)}</div>
-      <div style="font-size:10px;color:#64748b;margin-top:2px">צפון מנטור</div>
+      <div style="font-size:10px;color:#64748b;margin-top:2px">ציון מנטור</div>
     </th>`;
   }).join('');
 
@@ -881,7 +980,7 @@ function hexToRgb(hex) {
       </table>
     </div>
     <div style="display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center">
-      ${[['#10b981','מעולמ扃4.0)'],['#4f9eff','ؘוב (≃3.5)'],['#f59e0b','בינוני (≃3.0)'],['#ef4444','דורת שיפור (<3.0)']].map([col,lbl])=>
+      ${[['#10b981','מעולה (≥4.0)'],['#4f9eff','טוב (≥3.5)'],['#f59e0b','בינוני (≥3.0)'],['#ef4444','דורש שיפור (<3.0)']].map(([col,lbl])=>
         `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b">
           <div style="width:12px;height:12px;background:${col}33;border:1px solid ${col};border-radius:3px"></div>${lbl}
          </div>`).join('')}
