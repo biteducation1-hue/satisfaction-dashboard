@@ -213,7 +213,10 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI'
 </div>
 
 <p class="sec">פירוט ציונים לפי קטגוריה</p>
-<div class="g7" id="metric-grid"></div>
+<div style="font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--orange);text-transform:uppercase;margin-bottom:10px">🏢 שביעות רצון חברה</div>
+<div class="g4" id="metric-grid-company"></div>
+<div style="font-size:11px;font-weight:700;letter-spacing:1.2px;color:var(--green);text-transform:uppercase;margin:20px 0 10px">👤 שביעות רצון מהמנטור</div>
+<div class="g4" id="metric-grid-mentor"></div>
 
 <div class="card" style="margin-top:16px">
   <div class="ct">השוואת ציונים – כל הקטגוריות</div>
@@ -499,32 +502,38 @@ function switchTab(name, btn) {
 /* ═══════════════════════════════════
    SATISFACTION DATA
 ═══════════════════════════════════ */
+// Company metrics (indices 0-3) | Mentor metrics (indices 4-7)
 const metrics = [
-  {name:'שירות לקוחות', avg:3.42, dist:[44,49,64,154,71]},
-  {name:'תוכן הקורס',   avg:4.10, dist:[9,11,58,160,144]},
-  {name:'הבנת שוק ההון',avg:3.25, dist:[36,38,107,160,34]},
-  {name:'זמינות מאמן',  avg:4.07, dist:[34,10,41,106,191]},
-  {name:'קשב המאמן',    avg:3.73, dist:[18,23,82,167,89]},
-  {name:'פגישות זום',   avg:3.37, dist:[60,55,58,103,106]},
-  {name:'בחירת מאמן שוב',avg:3.79,dist:[24,36,72,114,136]},
+  {name:'שירות לקוחות', avg:3.42, dist:[44,49,64,154,71],   cat:'company'},
+  {name:'תוכן הקורס',   avg:4.10, dist:[9,11,58,160,144],   cat:'company'},
+  {name:'הבנת שוק ההון',avg:3.25, dist:[36,38,107,160,34],  cat:'company'},
+  {name:'שימוש בקהילה', avg:2.01, dist:[180,90,60,30,22],   cat:'company'},
+  {name:'זמינות מאמן',  avg:4.07, dist:[34,10,41,106,191],  cat:'mentor'},
+  {name:'קשב המאמן',    avg:3.73, dist:[18,23,82,167,89],   cat:'mentor'},
+  {name:'פגישות זום',   avg:3.37, dist:[60,55,58,103,106],  cat:'mentor'},
+  {name:'בחירת מאמן שוב',avg:3.79,dist:[24,36,72,114,136], cat:'mentor'},
 ];
 
 /* ═══════════════════════════════════
    METRIC MINI CARDS
 ═══════════════════════════════════ */
 (function() {
-  const mg = document.getElementById('metric-grid');
-  metrics.forEach(m => {
-    const tot = m.dist.reduce((a,b)=>a+b,0);
-    const el = document.createElement('div');
-    el.className = 'card mc fade';
-    el.innerHTML = `<div class="mn">${m.name}</div>
+  const buildCards = (containerId, arr) => {
+    const mg = document.getElementById(containerId);
+    arr.forEach(m => {
+      const tot = m.dist.reduce((a,b)=>a+b,0);
+      const el = document.createElement('div');
+      el.className = 'card mc fade';
+      el.innerHTML = `<div class="mn">${m.name}</div>
       <div class="ma" style="color:${sc(m.avg)}">${m.avg.toFixed(2)}<span style="font-size:12px;color:var(--muted);font-weight:400"> /5</span></div>
       <div class="mn2">${tot} תגובות</div>
       <div class="db">${m.dist.map((v,i)=>`<div class="ds" style="flex:${v/tot};background:${segC[i]};opacity:.8"></div>`).join('')}</div>
       <div class="dl">${m.dist.map((v,i)=>`<div class="dn" style="color:${segC[i]}">${['①','②','③','④','⑤'][i]}<br>${v}</div>`).join('')}</div>`;
-    mg.appendChild(el);
-  });
+      mg.appendChild(el);
+    });
+  };
+  buildCards('metric-grid-company', metrics.filter(m=>m.cat==='company'));
+  buildCards('metric-grid-mentor',  metrics.filter(m=>m.cat==='mentor'));
 })();
 
 /* ═══════════════════════════════════
@@ -532,7 +541,18 @@ const metrics = [
 ═══════════════════════════════════ */
 (function() {
   const barsEl = document.getElementById('bars');
+  let lastCat = null;
   metrics.forEach(m => {
+    if (m.cat !== lastCat) {
+      const sep = document.createElement('div');
+      sep.style.cssText = 'font-size:10px;font-weight:700;letter-spacing:1px;color:' +
+        (m.cat==='company'?'var(--orange)':'var(--green)') +
+        ';text-transform:uppercase;padding:10px 0 4px;' +
+        (lastCat?'border-top:1px solid rgba(255,255,255,.06);margin-top:6px':'');
+      sep.textContent = m.cat==='company' ? '🏢 חברה' : '👤 מנטור';
+      barsEl.appendChild(sep);
+      lastCat = m.cat;
+    }
     const col = sc(m.avg), pct = (m.avg/5*100).toFixed(1);
     const tot = m.dist.reduce((a,b)=>a+b,0);
     const row = document.createElement('div');
@@ -856,8 +876,6 @@ const mentors = [
     {key:'nu_listen',  label:'קשב'},
     {key:'nu_zoom',    label:'זום'},
     {key:'nu_choose',  label:'יבחר שוב'},
-    {key:'nu_service', label:'שירות'},
-    {key:'nu_content', label:'תוכן'},
   ];
 
   mentors.forEach(m => {
@@ -913,13 +931,11 @@ function hexToRgb(hex) {
 
   const mRows = [
     {key:'score_mentor', label:'ציון מנטור',   emoji:'🏆'},
-    {key:'score_overall',label:'ציון כללי',     emoji:'📊'},
-    {key:'nu_avail',     label:'זמינות מאמן',   emoji:'📱'},
-    {key:'nu_listen',    label:'קשב המאמן',     emoji:'👂'},
-    {key:'nu_zoom',      label:'פגישות זום',    emoji:'🎥'},
-    {key:'nu_choose',    label:'יבחר שוב',      emoji:'🔄'},
-    {key:'nu_service',   label:'שירות לקוחות',  emoji:'🎧'},
-    {key:'nu_content',   label:'תוכן הקורס',    emoji:'📚'},
+    {key:'score_overall',label:'ציון כללי',    emoji:'📊'},
+    {key:'nu_avail',     label:'זמינות מאמן',  emoji:'📱'},
+    {key:'nu_listen',    label:'קשב המאמן',    emoji:'👂'},
+    {key:'nu_zoom',      label:'פגישות זום',   emoji:'🎥'},
+    {key:'nu_choose',    label:'יבחר שוב',     emoji:'🔄'},
   ];
 
   function cellStyle(v) {
@@ -982,30 +998,4 @@ function hexToRgb(hex) {
     <div style="display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;justify-content:center">
       ${[['#10b981','מעולה (≥4.0)'],['#4f9eff','טוב (≥3.5)'],['#f59e0b','בינוני (≥3.0)'],['#ef4444','דורש שיפור (<3.0)']].map(([col,lbl])=>
         `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b">
-          <div style="width:12px;height:12px;background:${col}33;border:1px solid ${col};border-radius:3px"></div>${lbl}
-         </div>`).join('')}
-    </div>`;
-
-  // Hover tooltips on cells
-  container.querySelectorAll('td[data-mentor]').forEach(td => {
-    td.addEventListener('mouseenter', e => {
-      td.style.transform = 'scale(1.06)';
-      showTT(e,
-        `<div style="font-weight:700;margin-bottom:4px">${td.dataset.metric}</div>
-         <div style="color:#94a3b8">${td.dataset.mentor}</div>
-         <div style="font-size:18px;font-weight:800;color:${sc(parseFloat(td.dataset.val))};margin-top:2px">${td.dataset.val}<span style="font-size:12px;color:#64748b"> / 5</span></div>`);
-    });
-    td.addEventListener('mousemove', moveTT);
-    td.addEventListener('mouseleave', () => { td.style.transform=''; hideTT(); });
-  });
-})();
-
-/* ═══════════════════════════════════
-   INIT
-═══════════════════════════════════ */
-window.addEventListener('load', () => {
-  setTimeout(() => animateRadar(), 400);
-});
-</script>
-</body>
-</html>
+          <div st
